@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Landing Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: white;
+            overflow: hidden;
+        }
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-out;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(36,36,36,1) 0%, rgba(0,0,0,1) 100%);
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            flex-direction: column;
+        }
+        .title {
+            font-size: 3rem;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .title:hover {
+            color: cyan;
+        }
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .menu-btn div {
+            width: 100%;
+            height: 5px;
+            background: white;
+            transition: transform 0.3s ease-in-out;
+        }
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 200px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: right 0.3s ease-in-out;
+        }
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            transition: color 0.3s;
+        }
+        .nav-menu a:hover {
+            color: cyan;
+        }
+        .nav-active {
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+    
+    <div class="menu-btn" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    
+    <nav class="nav-menu">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="{% url "login" %}" class="nav-item nav-link">Login</a>
+        <a href="{% url "register" %}" class="nav-item nav-link">Register</a>
+    </nav>
+    
+    <div class="hero">
+        <h1 class="title">Welcome to the Future</h1>
+    </div>
+    
+    <script>
+        window.addEventListener("load", () => {
+            const loaderWrapper = document.querySelector(".loader-wrapper");
+            loaderWrapper.style.opacity = "0";
+            setTimeout(() => {
+                loaderWrapper.style.display = "none";
+                document.querySelector(".hero").style.opacity = "1";
+            }, 1000);
+        });
+        
+        function toggleMenu() {
+            document.querySelector(".nav-menu").classList.toggle("nav-active");
+        }
+    </script>
+</body>
+</html>
